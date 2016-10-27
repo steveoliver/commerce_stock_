@@ -102,6 +102,7 @@ before_install:
   # Add the oauth token to prevent GitHub timeouts.
   - git config --global github.accesstoken $GITHUB_OAUTH_TOKEN
   - composer self-update
+  - composer config repositories.drupal composer https://packagist.drupal-composer.org
   - composer global require "hirak/prestissimo:^0.3"
   - composer global require "lionsad/drupal_ti:dev-master"
   - composer global require "squizlabs/php_codesniffer:2.*"
