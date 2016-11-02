@@ -11,7 +11,6 @@
     "source": "http://cgit.drupalcode.org/commerce_stock"
   },
   "require": {
-    "drupal/address": "dev-8.x-1.x",
     "drupal/commerce": "dev-8.x-2.x"
   }
 }
