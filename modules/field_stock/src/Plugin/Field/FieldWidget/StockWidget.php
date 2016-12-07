@@ -104,8 +104,6 @@ class StockWidget extends WidgetBase {
         '#tag' => 'strong',
         '#value' => $this->t('In order to set the stock level you need to save the product first!'),
       ];
-
-
     }
     else {
       // Common.
