@@ -57,9 +57,9 @@ class StockStorageAPI implements StockCheckInterface, StockUpdateInterface {
   /**
    * Gets stock level for a given location and variation.
    *
-   * @param $location_id
+   * @param int $location_id
    *   Location id.
-   * @param $variation_id
+   * @param int $variation_id
    *   Variation id.
    *
    * @return array
@@ -195,7 +195,6 @@ class StockStorageAPI implements StockCheckInterface, StockUpdateInterface {
    *
    * @param int $variation_id
    *   The product variation id.
-   *
    * @param array $locations
    *   Array of locations ids.
    *

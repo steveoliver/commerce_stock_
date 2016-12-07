@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * Commerce Stock Storage Views callbacks.
+ */
 
 /**
  * Implements hook_views_data().

@@ -8,6 +8,27 @@ use Drupal\Core\Form\FormStateInterface;
 class StockTransactions2 extends FormBase {
 
   /**
+   * The product variation storage.
+   *
+   * @var \Drupal\commerce_product\ProductVariationStorage
+   */
+  protected $productVariationStorage;
+
+  /**
+   * The stock manager.
+   * @var \Drupal\commerce_stock\StockManager $stockManager
+   */
+  protected $stockManager;
+
+  /**
+   * Constructs a StockTransactions2 object.
+   */
+  public function __construct() {
+    $this->productVariationStorage = \Drupal::service('entity_type.manager')->getStorage('commerce_product_variation');
+    $this->stockManager = \Drupal::service('commerce.stock_manager');
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function getFormId() {
@@ -26,14 +47,8 @@ class StockTransactions2 extends FormBase {
       return $this->redirect('commerce_stock_ui.stock_transactions1');
     }
 
-    /** @var \Drupal\commerce_product\ProductVariationStorage $variation_storage */
-    $variation_storage = \Drupal::service('entity_type.manager') ->getStorage('commerce_product_variation');
-    $product_variation = $variation_storage->load($variation_id);
-
-    /** @var \Drupal\commerce_stock\StockManager $stockManager */
-    $stockManager = \Drupal::service('commerce.stock_manager');
-    $stockService = $stockManager->getService($product_variation);
-
+    $product_variation = $this->productVariationStoragetorage->load($variation_id);
+    $stockService = $this->stockManager->getService($product_variation);
     $locations = $stockService->getStockChecker()->getLocationList(TRUE);
     $location_options = [];
     foreach ($locations as $location_id => $location) {
@@ -157,36 +172,27 @@ class StockTransactions2 extends FormBase {
     $product_variation_id = $form_state->getValue('product_variation_id');
     $source_location = $form_state->getValue('source_location');
     $source_zone = $form_state->getValue('source_zone');
-
     $qty = $form_state->getValue('transaction_qty');
     $transaction_note = $form_state->getValue('transaction_note');
-
-    /** @var \Drupal\commerce_product\ProductVariationStorage $variation_storage */
-    $variation_storage = \Drupal::service('entity_type.manager') ->getStorage('commerce_product_variation');
-    $product_variation = $variation_storage->load($product_variation_id);
-
-    /** @var \Drupal\commerce_stock\StockManager $stockManager */
-    $stockManager = \Drupal::service('commerce.stock_manager');
-
+    $product_variation = $this->productVariationStorage->load($product_variation_id);
     if ($transaction_type == 'receiveStock') {
-      $stockManager->receiveStock($product_variation, $source_location, $source_zone, $qty, NULL, $transaction_note);
+      $this->stockManager->receiveStock($product_variation, $source_location, $source_zone, $qty, NULL, $transaction_note);
     }
     elseif ($transaction_type == 'sellStock') {
       $order_id = $form_state->getValue('order');;
       $user_id = $form_state->getValue('user');;
-      $stockManager->sellStock($product_variation, $source_location, $source_zone, $qty, NULL, $order_id, $user_id, $transaction_note);
+      $this->stockManager->sellStock($product_variation, $source_location, $source_zone, $qty, NULL, $order_id, $user_id, $transaction_note);
     }
     elseif ($transaction_type == 'returnStock') {
       $order_id = $form_state->getValue('order');;
       $user_id = $form_state->getValue('user');;
-      $stockManager->returnStock($product_variation, $source_location, $source_zone, $qty, NULL, $order_id, $user_id, $transaction_note);
+      $this->stockManager->returnStock($product_variation, $source_location, $source_zone, $qty, NULL, $order_id, $user_id, $transaction_note);
     }
     elseif ($transaction_type == 'moveStock') {
       $target_location = $form_state->getValue('target_location');
       $target_zone = $form_state->getValue('target_zone');
-      $stockManager->moveStock($product_variation, $source_location, $target_location, $source_zone, $target_zone, $qty, NULL, $transaction_note);
+      $this->stockManager->moveStock($product_variation, $source_location, $target_location, $source_zone, $target_zone, $qty, NULL, $transaction_note);
     }
-
   }
 
 }
