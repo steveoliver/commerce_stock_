@@ -77,7 +77,7 @@ class StockStorageAPI implements StockCheckInterface, StockUpdateInterface {
 
     return [
       'qty' => $result ? $result->qty : 0,
-      'last_transaction' => $result ? $result->last_transaction_id : 0
+      'last_transaction' => $result ? $result->last_transaction_id : 0,
     ];
   }
 
@@ -201,7 +201,6 @@ class StockStorageAPI implements StockCheckInterface, StockUpdateInterface {
     $location_levels = [];
     foreach ($locations as $location_id) {
       $location_level = $this->getLocationStockLevel($location_id, $variation_id);
-
 
       $latest_txn = $this->getLocationStockTransactionLatest($location_id, $variation_id);
       $transactions_qty = $this->getLocationStockTransactionSum($location_id, $variation_id, $location_level['last_transaction'], $latest_txn);
