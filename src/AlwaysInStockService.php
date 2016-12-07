@@ -35,14 +35,14 @@ class AlwaysInStockService implements StockServiceInterface {
     // Create the objects needed.
     $this->stockChecker = new AlwaysInStock();
     $this->stockUpdater = $this->stockChecker;
-    $this->stockConfiguration = new CoreStockConfiguration($this->stockChecker);
+    $this->stockConfiguration = new StockConfiguration($this->stockChecker);
   }
 
   /**
    * {@inheritdoc}
    */
   public function getName() {
-    return 'Always In Stock';
+    return 'Always in stock';
   }
 
   /**

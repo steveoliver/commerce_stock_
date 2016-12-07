@@ -226,7 +226,7 @@ class StockManager implements StockManagerInterface, StockTransactionsInterface 
   }
 
   /**
-   *
+   * Gets the total stock level for a given purchasable entity.
    */
   public function getStockLevel(PurchasableEntityInterface $purchasable_entity) {
     // Make sure entity is a product variation.

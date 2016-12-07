@@ -5,11 +5,6 @@ namespace Drupal\commerce_stock\Form;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
-/**
- * Class StockConfigForm.
- *
- * @package Drupal\commerce_stock\Form
- */
 class StockConfigForm extends ConfigFormBase {
 
   /**
@@ -25,7 +20,7 @@ class StockConfigForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'stock_config_form';
+    return 'commerce_stock_config_form';
   }
 
   /**
