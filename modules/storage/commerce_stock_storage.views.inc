@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Commerce Stock Storage Views callbacks.
