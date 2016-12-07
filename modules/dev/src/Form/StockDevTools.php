@@ -309,11 +309,7 @@ class StockDevTools extends FormBase {
     $zone = $form_state->getValue('zone');
     $quantity = $form_state->getValue('quantity');
     $unit_cost = NULL;
-    $options = [
-    // 'related_tid' => '1',
-    // 'related_oid' => '1',
-    // 'related_uid' => '1',
-    ];
+    $options = [];
     $this->stockStorageApi->createTransaction($variation_id, $location_id, $zone, $quantity, $unit_cost, 1, $options);
   }
 

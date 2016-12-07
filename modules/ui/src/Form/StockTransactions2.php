@@ -16,7 +16,8 @@ class StockTransactions2 extends FormBase {
 
   /**
    * The stock manager.
-   * @var \Drupal\commerce_stock\StockManager $stockManager
+   *
+   * @var \Drupal\commerce_stock\StockManager
    */
   protected $stockManager;
 
