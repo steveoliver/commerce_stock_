@@ -2,9 +2,6 @@
 
 namespace Drupal\commerce_stock;
 
-/**
- * Defines a common interface for stock checking.
- */
 interface StockCheckInterface {
 
   /**
@@ -15,7 +12,7 @@ interface StockCheckInterface {
    * @param array $locations
    *   Array of locations.
    *
-   * @return int The stock level.
+   * @return int
    *   The stock level.
    */
   public function getTotalStockLevel($variation_id, array $locations);
@@ -63,7 +60,7 @@ interface StockCheckInterface {
    * @param bool $return_active_only
    *   Whether or not only return active locations.
    *
-   * @return array List of locations keyed by ID.
+   * @return array
    *   List of locations keyed by ID.
    */
   public function getLocationList($return_active_only = TRUE);

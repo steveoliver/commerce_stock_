@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\commerce_stock_s;
+namespace Drupal\commerce_stock_storage;
 
 use Drupal\commerce_stock\StockCheckInterface;
 use Drupal\commerce_stock\StockUpdateInterface;
@@ -59,7 +59,6 @@ class StockStorageAPI implements StockCheckInterface, StockUpdateInterface {
    *
    * @param $location_id
    *   Location id.
-   *
    * @param $variation_id
    *   Variation id.
    *
@@ -88,13 +87,10 @@ class StockStorageAPI implements StockCheckInterface, StockUpdateInterface {
    *
    * @param int $location_id
    *   Location id.
-   *
    * @param int $variation_id
    *   Variation id.
-   *
    * @param int $qty
    *   Quantity.
-   *
    * @param int $last_txn
    *   Last transaction id.
    */
@@ -126,10 +122,9 @@ class StockStorageAPI implements StockCheckInterface, StockUpdateInterface {
   /**
    * Gets the last transaction id for a given location and variation.
    *
-   * @param $location_id
+   * @param int $location_id
    *   Location id.
-   *
-   * @param $variation_id
+   * @param int $variation_id
    *   Product variation id.
    *
    * @return int
@@ -151,6 +146,18 @@ class StockStorageAPI implements StockCheckInterface, StockUpdateInterface {
 
   /**
    * Gets the sum of all stock transactions between a range of transactions.
+   *
+   * @param int $location_id
+   *   The location id.
+   * @param int $variation_id
+   *   The variation id.
+   * @param int $min
+   *   The minimum transaction number.
+   * @param int $max
+   *   The maximum transaction number.
+   *
+   * @return int
+   *   The sum of stock transactions for a given location and variation.
    */
   public function getLocationStockTransactionSum($location_id, $variation_id, $min, $max) {
     $db = \Drupal::database();
