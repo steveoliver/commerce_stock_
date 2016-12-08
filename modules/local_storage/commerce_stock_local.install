@@ -3,7 +3,7 @@
 /**
  * Implements hook_schema().
  */
-function commerce_stock_storage_schema() {
+function commerce_stock_local_schema() {
 
   $schema['cs_inventory_location'] = [
     'description' => 'List of locations/warehouse form commerce stock.',
@@ -232,7 +232,7 @@ function commerce_stock_storage_schema() {
 /**
  * Implements hook_install().
  */
-function commerce_stock_storage_install() {
+function commerce_stock_local_install() {
   $db = \Drupal::database();
   // Add primary stock location.
   $db->insert('cs_inventory_location')

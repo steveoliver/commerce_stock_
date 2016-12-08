@@ -8,7 +8,7 @@
 /**
  * Implements hook_views_data().
  */
-function commerce_stock_storage_views_data() {
+function commerce_stock_local_views_data() {
   // Define the return array.
   $data = [];
 
@@ -28,7 +28,7 @@ function commerce_stock_storage_views_data() {
   // or the entity type that causes the table to exist. Setting this ensures
   // that views have the correct dependencies. This is automatically set to the
   // module that implements hook_views_data().
-  $data['cs_inventory_location']['table']['provider'] = 'commerce_stock_storage';
+  $data['cs_inventory_location']['table']['provider'] = 'commerce_stock_local';
 
   // Some tables are "base" tables, meaning that they can be the base tables
   // for views. Non-base tables can only be brought in via relationships in
@@ -100,7 +100,7 @@ function commerce_stock_storage_views_data() {
   $data['cs_inventory_transaction'] = [];
   $data['cs_inventory_transaction']['table'] = [];
   $data['cs_inventory_transaction']['table']['group'] = t('Stock transactions');
-  $data['cs_inventory_transaction']['table']['provider'] = 'commerce_stock_storage';
+  $data['cs_inventory_transaction']['table']['provider'] = 'commerce_stock_local';
   $data['cs_inventory_transaction']['table']['base'] = [
     'field' => 'trid',
     'title' => t('Stock transaction'),
@@ -328,7 +328,7 @@ function commerce_stock_storage_views_data() {
   $data['cs_inventory_transaction_type'] = [];
   $data['cs_inventory_transaction_type']['table'] = [];
   $data['cs_inventory_transaction_type']['table']['group'] = t('Stock Transaction Types');
-  $data['cs_inventory_transaction_type']['table']['provider'] = 'commerce_stock_storage';
+  $data['cs_inventory_transaction_type']['table']['provider'] = 'commerce_stock_local';
   $data['cs_inventory_transaction_type']['table']['base'] = [
     'field' => 'ttid',
     'title' => t('Stock transaction Type'),

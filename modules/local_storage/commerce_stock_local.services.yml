@@ -1,5 +1,5 @@
 services:
   commerce.stock_manager.local_stock_service:
-    class: Drupal\commerce_stock_storage\LocalStockService
+    class: Drupal\commerce_stock_local\LocalStockService
     tags:
     - { name: commerce.stock_service, priority: 0 }

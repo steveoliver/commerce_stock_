@@ -1,16 +1,16 @@
 <?php
 
-namespace Drupal\commerce_stock_storage\Plugin\QueueWorker;
+namespace Drupal\commerce_stock_local\Plugin\QueueWorker;
 
 use Drupal\Core\Queue\QueueWorkerBase;
-use Drupal\commerce_stock_storage\StockStorageAPI;
+use Drupal\commerce_stock_local\StockStorageAPI;
 
 /**
  * A Commerce Stock worker.
  *
  * @QueueWorker(
- *   id = "commerce_stock_storage_location_level_updater",
- *   title = @Translation("Commerce Stock Storage local level updater"),
+ *   id = "commerce_stock_local_location_level_updater",
+ *   title = @Translation("Commerce Stock Local location level updater"),
  *   cron = {"time" = 10}
  * )
  */
