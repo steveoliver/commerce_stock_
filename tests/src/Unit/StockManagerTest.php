@@ -29,7 +29,7 @@ class StockManagerTest extends UnitTestCase {
   /**
    * ::covers addService
    * ::covers listServices
-   * ::covers listServiceIds
+   * ::covers listServiceIds.
    */
   public function testServices() {
     $mock_builder = $this->getMockBuilder('Drupal\commerce_stock\StockServiceInterface')
