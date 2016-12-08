@@ -6,4 +6,5 @@ package: 'Commerce Stock'
 dependencies:
   - commerce_product
   - commerce_stock
+  - commerce_stock_local
   - commerce_store
