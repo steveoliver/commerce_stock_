@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\commerce_stock_storage;
+namespace Drupal\commerce_stock_local;
 
 use Drupal\commerce_stock\StockCheckInterface;
 use Drupal\commerce_stock\StockUpdateInterface;
@@ -8,7 +8,7 @@ use Drupal\commerce_stock\StockUpdateInterface;
 /**
  * The API used by the commerce local storage service.
  */
-class StockStorageAPI implements StockCheckInterface, StockUpdateInterface {
+class LocalStockStorageAPI implements StockCheckInterface, StockUpdateInterface {
 
   /**
    * {@inheritdoc}

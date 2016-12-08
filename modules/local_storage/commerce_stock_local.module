@@ -3,18 +3,18 @@
 /**
  * Implements hook_cron().
  */
-function commerce_stock_storage_cron() {
-  $stock_config = \Drupal::configFactory()->getEditable('commerce_stock_storage.cron');
+function commerce_stock_local_cron() {
+  $stock_config = \Drupal::configFactory()->getEditable('commerce_stock_local.cron');
   // Default to an hourly interval.
   $interval = $stock_config->get('interval');
   $interval = !empty($interval) ? $interval : 3600;
   // We usually don't want to act every time cron runs (which could be every
   // minute) so keep a time for the next run in the site state.
-  $next_execution = \Drupal::state()->get('commerce_stock_storage.level_next_update');
+  $next_execution = \Drupal::state()->get('commerce_stock_local.level_next_update');
   $next_execution = !empty($next_execution) ? $next_execution : 0;
   if (REQUEST_TIME >= $next_execution) {
-    commerce_stock_storage_update_location_level_queue();
-    \Drupal::state()->set('commerce_stock_storage.level_next_update', REQUEST_TIME + $interval);
+    _commerce_stock_local_update_location_level_queue();
+    \Drupal::state()->set('commerce_stock_local.level_next_update', REQUEST_TIME + $interval);
   }
 }
 
@@ -22,28 +22,28 @@ function commerce_stock_storage_cron() {
  * Update the Location Level Q (LLQ).
  *
  * The location level Q holds a list of product IDs to be processed by the
- * cron_stock_update_location_level queue worker.
+ * commerce_stock_local_update_location_level queue worker.
  */
-function commerce_stock_storage_update_location_level_queue() {
-  $queue = \Drupal::queue('commerce_stock_storage_update_location_level');
+function _commerce_stock_local_update_location_level_queue() {
+  $queue = \Drupal::queue('commerce_stock_local_update_location_level');
 
   // Get the last processed product id.
-  $level_last_id = \Drupal::state()->get('commerce_stock_storage.level_last_id');
+  $level_last_id = \Drupal::state()->get('commerce_stock_local.level_last_id');
   $level_last_id = !empty($level_last_id) ? $level_last_id : 0;
 
   // Check if Q empty and not initialized to 0.
   if (($queue->numberOfItems() == 0) && ($level_last_id != 0)) {
     // Set the Q reset state.
-    \Drupal::state()->set('commerce_stock_storage.llq_reset', TRUE);
+    \Drupal::state()->set('commerce_stock_local.llq_reset', TRUE);
     $llq_reset = TRUE;
   }
   else {
     // Get the Q reset state.
-    $llq_reset = \Drupal::state()->get('commerce_stock_storage.llq_reset');
+    $llq_reset = \Drupal::state()->get('commerce_stock_local.llq_reset');
     $llq_reset = !empty($llq_reset) ? $llq_reset : FALSE;
   }
   // Get the batch size.
-  $llq_batchsize = \Drupal::state()->get('commerce_stock_storage.llq_batchsize');
+  $llq_batchsize = \Drupal::state()->get('commerce_stock_local.llq_batchsize');
   $llq_batchsize = !empty($llq_batchsize) ? $llq_batchsize : 50;
 
   $result = \Drupal::entityQuery('commerce_product_variation')
@@ -58,14 +58,14 @@ function commerce_stock_storage_update_location_level_queue() {
   // Check if we can restrt processing products from the top.
   if ($llq_reset && (count($result) < $llq_batchsize)) {
     // Set reset to FALSE.
-    \Drupal::state()->set('commerce_stock_storage.llq_reset', FALSE);
+    \Drupal::state()->set('commerce_stock_local.llq_reset', FALSE);
     // Set last product id to 0.
-    \Drupal::state()->set('commerce_stock_storage.level_last_id', 0);
+    \Drupal::state()->set('commerce_stock_local.level_last_id', 0);
   }
   else {
     // Set the last product id for the Q bookmark.
     if (!empty($result)) {
-      \Drupal::state()->set('commerce_stock_storage.level_last_id', $pid);
+      \Drupal::state()->set('commerce_stock_local.level_last_id', $pid);
     }
   }
 }

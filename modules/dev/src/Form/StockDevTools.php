@@ -5,7 +5,7 @@ namespace Drupal\commerce_stock_dev\Form;
 use Drupal\commerce\Context;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\commerce_stock_storage\StockStorageAPI;
+use Drupal\commerce_stock_local\LocalStockStorageAPI;
 
 class StockDevTools extends FormBase {
 
@@ -31,14 +31,14 @@ class StockDevTools extends FormBase {
   protected $stockManager;
 
   /**
-   * The Commerce Stock Storage API.
+   * The local storage API.
    *
-   * @var \Drupal\commerce_stock_storage\StockStorageAPI
+   * @var \Drupal\commerce_stock_local\LocalStockStorageAPI
    */
-  protected $stockStorageApi;
+  protected $localStockStorageAPI;
 
   /**
-   * The Commerce Stock stock availability checker.
+   * The stock availability checker.
    *
    * @var \Drupal\commerce_stock\StockAvailabilityChecker
    */
@@ -59,7 +59,7 @@ class StockDevTools extends FormBase {
     $this->currentStore = \Drupal::service('commerce_store.store_context')->getStore();
     $this->stockAvailabilityChecker = \Drupal::service('commerce.availability_checker.stock_availability_checker');
     $this->stockManager = \Drupal::service('commerce.stock_manager');
-    $this->stockStorageApi = new StockStorageAPI();
+    $this->localStockStorageAPI = new LocalStockStorageAPI();
     $this->variationStorage = \Drupal::service('entity_type.manager')->getStorage('commerce_product_variation');
   }
 
@@ -310,7 +310,7 @@ class StockDevTools extends FormBase {
     $quantity = $form_state->getValue('quantity');
     $unit_cost = NULL;
     $options = [];
-    $this->stockStorageApi->createTransaction($variation_id, $location_id, $zone, $quantity, $unit_cost, 1, $options);
+    $this->localStockStorageAPI->createTransaction($variation_id, $location_id, $zone, $quantity, $unit_cost, 1, $options);
   }
 
   /**
@@ -319,7 +319,7 @@ class StockDevTools extends FormBase {
   public function submitUpdateProductInventoryLocationLevel(array &$form, FormStateInterface $form_state) {
     $variation_id = $form_state->getValue('prod_vid');
     $location_id = $form_state->getValue('location');
-    $this->stockStorageApi->updateLocationStockLevel($location_id, $variation_id);
+    $this->localStockStorageAPI->updateLocationStockLevel($location_id, $variation_id);
   }
 
   /**
