@@ -2,7 +2,7 @@
 
 namespace Drupal\commerce_stock;
 
-class StockConfiguration implements StockConfigurationInterface {
+class StockServiceConfig implements StockServiceConfigInterface {
 
   /**
    * The stock checker.
@@ -19,7 +19,7 @@ class StockConfiguration implements StockConfigurationInterface {
   protected $stockLocations;
 
   /**
-   * Constructs a new StockConfiguration object.
+   * Constructs a new StockServiceConfig object.
    *
    * @param \Drupal\commerce_stock\StockCheckInterface $stock_checker
    *   The stock checker.

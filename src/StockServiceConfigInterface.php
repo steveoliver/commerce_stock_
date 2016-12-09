@@ -2,7 +2,7 @@
 
 namespace Drupal\commerce_stock;
 
-interface StockConfigurationInterface {
+interface StockServiceConfigInterface {
 
   /**
    * Get the primary location for automatic stock allocation.
