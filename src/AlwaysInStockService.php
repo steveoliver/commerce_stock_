@@ -24,9 +24,9 @@ class AlwaysInStockService implements StockServiceInterface {
   /**
    * The stock Configuration.
    *
-   * @var \Drupal\commerce_stock\StockConfigurationInterface
+   * @var \Drupal\commerce_stock\StockServiceConfigInterface
    */
-  protected $stockConfiguration;
+  protected $stockServiceConfig;
 
   /**
    * Constructs a new AlwaysInStockService object.
@@ -35,7 +35,7 @@ class AlwaysInStockService implements StockServiceInterface {
     // Create the objects needed.
     $this->stockChecker = new AlwaysInStock();
     $this->stockUpdater = $this->stockChecker;
-    $this->stockConfiguration = new StockConfiguration($this->stockChecker);
+    $this->stockServiceConfig = new StockServiceConfig($this->stockChecker);
   }
 
   /**
@@ -70,7 +70,7 @@ class AlwaysInStockService implements StockServiceInterface {
    * {@inheritdoc}
    */
   public function getConfiguration() {
-    return $this->stockConfiguration;
+    return $this->stockServiceConfig;
   }
 
 }
