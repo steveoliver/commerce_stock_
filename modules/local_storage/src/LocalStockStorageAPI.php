@@ -34,7 +34,7 @@ class LocalStockStorageAPI implements StockCheckInterface, StockUpdateInterface 
       'related_uid' => $related_uid,
       'data' => serialize($data),
     ];
-    $insert = \Drupal::database()->insert('cs_inventory_transaction')
+    $insert = \Drupal::database()->insert('commerce_stock_transaction')
       ->fields(array_keys($field_values))
       ->values(array_values($field_values))->execute();
 
@@ -67,8 +67,8 @@ class LocalStockStorageAPI implements StockCheckInterface, StockUpdateInterface 
    */
   public function getLocationStockLevel($location_id, $variation_id) {
     $db = \Drupal::database();
-    $result = $db->select('cs_inventory_location_level', 'ill')
-      ->fields('ill')
+    $result = $db->select('commerce_stock_location_level', 'll')
+      ->fields('ll')
       ->condition('location_id', $location_id)
       ->condition('variation_id', $variation_id)
       ->execute()
@@ -96,13 +96,13 @@ class LocalStockStorageAPI implements StockCheckInterface, StockUpdateInterface 
    */
   public function setLocationStockLevel($location_id, $variation_id, $qty, $last_txn) {
     $db = \Drupal::database();
-    $existing = $db->select('cs_inventory_location_level', 'ill')
-      ->fields('ill')
+    $existing = $db->select('commerce_stock_location_level', 'll')
+      ->fields('ll')
       ->condition('location_id', $location_id)
       ->condition('variation_id', $variation_id)
       ->execute()->fetch();
     if ($existing) {
-      $db->update('cs_inventory_location_level')
+      $db->update('commerce_stock_location_level')
         ->fields([
           'qty' => $qty,
           'last_transaction_id' => $last_txn,
@@ -112,7 +112,7 @@ class LocalStockStorageAPI implements StockCheckInterface, StockUpdateInterface 
         ->execute();
     }
     else {
-      $db->insert('cs_inventory_location_level')
+      $db->insert('commerce_stock_location_level')
         ->fields(['location_id', 'variation_id', 'qty', 'last_transaction_id'])
         ->values([$location_id, $variation_id, $qty, $last_txn])
         ->execute();
@@ -132,10 +132,10 @@ class LocalStockStorageAPI implements StockCheckInterface, StockUpdateInterface 
    */
   public function getLocationStockTransactionLatest($location_id, $variation_id) {
     $db = \Drupal::database();
-    $query = $db->select('cs_inventory_transaction')
+    $query = $db->select('commerce_stock_transaction')
       ->condition('location_id', $location_id)
       ->condition('variation_id', $variation_id);
-    $query->addExpression('MAX(trid)', 'max_id');
+    $query->addExpression('MAX(id)', 'max_id');
     $query->groupBy('location_id');
     $result = $query
       ->execute()
@@ -161,13 +161,13 @@ class LocalStockStorageAPI implements StockCheckInterface, StockUpdateInterface 
    */
   public function getLocationStockTransactionSum($location_id, $variation_id, $min, $max) {
     $db = \Drupal::database();
-    $query = $db->select('cs_inventory_transaction', 'it')
-      ->fields('it', ['location_id'])
+    $query = $db->select('commerce_stock_transaction', 'txn')
+      ->fields('txn', ['location_id'])
       ->condition('location_id', $location_id)
       ->condition('variation_id', $variation_id)
-      ->condition('trid', $min, '>');
+      ->condition('id', $min, '>');
     if ($max) {
-      $query->condition('trid', $max, '<=');
+      $query->condition('id', $max, '<=');
     }
     $query->addExpression('SUM(qty)', 'qty');
     $query->groupBy('location_id');
@@ -250,8 +250,8 @@ class LocalStockStorageAPI implements StockCheckInterface, StockUpdateInterface 
    */
   public function getLocationList($return_active_only = TRUE) {
     $db = \Drupal::database();
-    $query = $db->select('cs_inventory_location', 'il')
-      ->fields('il');
+    $query = $db->select('commerce_stock_location', 'loc')
+      ->fields('loc');
     if ($return_active_only) {
       $query->condition('status', 1);
     }
@@ -259,7 +259,7 @@ class LocalStockStorageAPI implements StockCheckInterface, StockUpdateInterface 
     $location_info = [];
     if ($result) {
       foreach ($result as $record) {
-        $location_info[$record->locid] = [
+        $location_info[$record->id] = [
           'name' => $record->name,
           'status' => $record->status,
         ];

@@ -5,84 +5,84 @@
  */
 function commerce_stock_local_schema() {
 
-  $schema['cs_inventory_location'] = [
-    'description' => 'List of locations/warehouse form commerce stock.',
+  $schema['commerce_stock_location'] = [
+    'description' => 'Commerce stock locations',
     'fields' => [
-      'locid' => [
-        'description' => 'Primary Key: Location ID.',
+      'id' => [
+        'description' => 'Location ID',
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ],
       'name' => [
-        'description' => 'The name of the locations/warehous',
+        'description' => 'Location name',
         'type' => 'varchar_ascii',
         'not null' => TRUE,
         'default' => '',
         'length' => 128,
       ],
       'status' => [
-        'description' => 'Boolean indicating whether the location is active.',
+        'description' => 'Location active flag',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
       ],
     ],
-    'primary key' => ['locid'],
+    'primary key' => ['id'],
   ];
 
-  $schema['cs_inventory_transaction_type'] = [
-    'description' => 'The Type of  transaction.',
+  $schema['commerce_stock_transaction_type'] = [
+    'description' => 'Commerce Stock transaction types',
     'fields' => [
-      'ttid' => [
-        'description' => 'Primary Key: transaction type ID.',
+      'id' => [
+        'description' => 'Transaction type ID',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ],
       'name' => [
-        'description' => 'The name of the transaction type',
+        'description' => 'Transaction type name',
         'type' => 'varchar_ascii',
         'not null' => TRUE,
         'default' => '',
         'length' => 128,
       ],
-      'parent_ttid' => [
-        'description' => 'The parent transaction (no more then one level nesting)',
+      'parent_id' => [
+        'description' => 'Parent transaction type',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ],
     ],
-    'primary key' => ['ttid'],
+    'primary key' => ['id'],
     'foreign keys' => [
       'parent_type' => [
-        'table' => 'cs_inventory_transaction_type',
+        'table' => 'commerce_stock_transaction_type',
         'columns' => [
-          'parent_ttid' => 'ttid',
+          'parent_id' => 'id',
         ],
       ],
     ],
 
   ];
 
-  $schema['cs_inventory_transaction'] = [
+  $schema['commerce_stock_transaction'] = [
     'description' => 'Stores inventory transactions form commerce stock.',
     'fields' => [
-      'trid' => [
-        'description' => 'Primary Key: unique transactions ID.',
+      'id' => [
+        'description' => 'Transaction ID',
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ],
       'variation_id' => [
-        'description' => 'The referenced product variation',
+        'description' => 'Product variation ID',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ],
       'qty' => [
-        'description' => 'The quentity',
+        'description' => 'Transaction quantity',
         'type' => 'numeric',
         'size' => 'normal',
         'not null' => TRUE,
@@ -91,20 +91,20 @@ function commerce_stock_local_schema() {
         'scale' => 2,
       ],
       'location_id' => [
-        'description' => 'The location ID (locid).',
+        'description' => 'Transaction location ID',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ],
       'location_zone' => [
-        'description' => 'the zone in: aisle.bay.shelf.bin format',
+        'description' => 'Transaction location zone',
         'type' => 'varchar_ascii',
         'length' => 28,
         'not null' => TRUE,
         'default' => '',
       ],
       'unit_cost' => [
-        'description' => 'The amount paid per unit',
+        'description' => 'Amount paid per unit',
         'type' => 'numeric',
         'size' => 'normal',
         'precision' => 19,
@@ -116,26 +116,26 @@ function commerce_stock_local_schema() {
         'description' => 'The date & time of the transaction',
       ],
       'transaction_type_id' => [
-        'description' => 'transaction type ID.',
+        'description' => 'Transaction type ID',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ],
       // Metadata.
       'related_tid' => [
-        'description' => 'related transaction.',
+        'description' => 'Related transaction ID',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => FALSE,
       ],
       'related_oid' => [
-        'description' => 'related order.',
+        'description' => 'Related order ID',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => FALSE,
       ],
       'related_uid' => [
-        'description' => 'related user.',
+        'description' => 'Related user ID',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => FALSE,
@@ -144,28 +144,28 @@ function commerce_stock_local_schema() {
         'type' => 'blob',
         'not null' => FALSE,
         'size' => 'big',
-        'description' => 'Serialized data array.',
+        'description' => 'Serialized data array',
       ],
 
     ],
-    'primary key' => ['trid'],
+    'primary key' => ['id'],
     'foreign keys' => [
       'location' => [
-        'table' => 'cs_inventory_location',
+        'table' => 'commerce_stock_location',
         'columns' => [
-          'location_id' => 'locid',
+          'location_id' => 'location_id',
         ],
       ],
       'transaction_type' => [
-        'table' => 'cs_inventory_transaction_type',
+        'table' => 'commerce_stock_transaction_type',
         'columns' => [
-          'transaction_type_id' => 'ttid',
+          'transaction_type_id' => 'id',
         ],
       ],
       'related_transaction' => [
-        'table' => 'cs_inventory_transaction',
+        'table' => 'commerce_stock_transaction',
         'columns' => [
-          'related_tid' => 'trid',
+          'related_tid' => 'id',
         ],
       ],
       'related_order' => [
@@ -183,23 +183,23 @@ function commerce_stock_local_schema() {
     ],
   ];
 
-  $schema['cs_inventory_location_level'] = [
+  $schema['commerce_stock_location_level'] = [
     'description' => 'Stock Level at a location.',
     'fields' => [
       'location_id' => [
-        'description' => 'The location ID (locid).',
+        'description' => 'The location ID',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ],
       'variation_id' => [
-        'description' => 'The referenced product variation',
+        'description' => 'The referenced product variation ID',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ],
       'qty' => [
-        'description' => 'The quentity',
+        'description' => 'The quantity',
         'type' => 'numeric',
         'size' => 'normal',
         'not null' => TRUE,
@@ -208,19 +208,18 @@ function commerce_stock_local_schema() {
         'scale' => 2,
       ],
       'last_transaction_id' => [
-        'description' => 'The last transaction that was used to calculate the total quentity to.',
+        'description' => 'The last transaction that was used to calculate the total quantity',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ],
-
     ],
     'primary key' => ['location_id', 'variation_id'],
     'foreign keys' => [
       'location' => [
-        'table' => 'cs_inventory_location',
+        'table' => 'commerce_stock_location',
         'columns' => [
-          'location_id' => 'locid',
+          'location_id' => 'location_id',
         ],
       ],
     ],
@@ -235,7 +234,7 @@ function commerce_stock_local_schema() {
 function commerce_stock_local_install() {
   $db = \Drupal::database();
   // Add primary stock location.
-  $db->insert('cs_inventory_location')
+  $db->insert('commerce_stock_location')
     ->fields([
       'name' => 'Main',
       'status' => 1,
@@ -243,54 +242,54 @@ function commerce_stock_local_install() {
     ->execute();
 
   // Add core transaction types.
-  $db->insert('cs_inventory_transaction_type')
+  $db->insert('commerce_stock_transaction_type')
     ->fields([
-      'ttid' => 1,
+      'id' => 1,
       'name' => 'Stock in',
-      'parent_ttid' => 1,
+      'parent_id' => 1,
     ])
     ->execute();
-  $db->insert('cs_inventory_transaction_type')
+  $db->insert('commerce_stock_transaction_type')
     ->fields([
-      'ttid' => 2,
+      'id' => 2,
       'name' => 'Stock Out',
-      'parent_ttid' => 2,
+      'parent_id' => 2,
     ])
     ->execute();
   // Add sub transaction types.
-  $db->insert('cs_inventory_transaction_type')
+  $db->insert('commerce_stock_transaction_type')
     ->fields([
-      'ttid' => 4,
+      'id' => 4,
       'name' => 'Sale',
-      'parent_ttid' => 2,
+      'parent_id' => 2,
     ])
     ->execute();
-  $db->insert('cs_inventory_transaction_type')
+  $db->insert('commerce_stock_transaction_type')
     ->fields([
-      'ttid' => 5,
+      'id' => 5,
       'name' => 'Return',
-      'parent_ttid' => 1,
+      'parent_id' => 1,
     ])
     ->execute();
-  $db->insert('cs_inventory_transaction_type')
+  $db->insert('commerce_stock_transaction_type')
     ->fields([
-      'ttid' => 6,
+      'id' => 6,
       'name' => 'New Stock',
-      'parent_ttid' => 1,
+      'parent_id' => 1,
     ])
     ->execute();
-  $db->insert('cs_inventory_transaction_type')
+  $db->insert('commerce_stock_transaction_type')
     ->fields([
-      'ttid' => 7,
+      'id' => 7,
       'name' => 'Move From',
-      'parent_ttid' => 2,
+      'parent_id' => 2,
     ])
     ->execute();
-  $db->insert('cs_inventory_transaction_type')
+  $db->insert('commerce_stock_transaction_type')
     ->fields([
-      'ttid' => 8,
+      'id' => 8,
       'name' => 'Move To',
-      'parent_ttid' => 1,
+      'parent_id' => 1,
     ])
     ->execute();
 }

@@ -15,39 +15,39 @@ function commerce_stock_local_views_data() {
   // Stock Location
   // The outermost keys of $data are Views table names, which should usually
   // be the same as the hook_schema() table names.
-  $data['cs_inventory_location'] = [];
+  $data['commerce_stock_location'] = [];
 
-  $data['cs_inventory_location']['table'] = [];
+  $data['commerce_stock_location']['table'] = [];
 
   // Within 'table', the value of 'group' (translated string) is used as a
   // prefix in Views UI for this table's fields, filters, etc. When adding
   // a field, filter, etc. you can also filter by the group.
-  $data['cs_inventory_location']['table']['group'] = t('Stock location');
+  $data['commerce_stock_location']['table']['group'] = t('Commerce Stock Local');
 
   // Within 'table', the value of 'provider' is the module that provides schema
   // or the entity type that causes the table to exist. Setting this ensures
   // that views have the correct dependencies. This is automatically set to the
   // module that implements hook_views_data().
-  $data['cs_inventory_location']['table']['provider'] = 'commerce_stock_local';
+  $data['commerce_stock_location']['table']['provider'] = 'commerce_stock_local';
 
   // Some tables are "base" tables, meaning that they can be the base tables
   // for views. Non-base tables can only be brought in via relationships in
   // views based on other tables. To define a table to be a base table, add
   // key 'base' to the 'table' array:
-  $data['cs_inventory_location']['table']['base'] = [
+  $data['commerce_stock_location']['table']['base'] = [
     // Identifier (primary) field in this table for Views.
-    'field' => 'locid',
+    'field' => 'location_id',
     // Label in the UI.
-    'title' => t('Stock location'),
+    'title' => t('Commerce Stock Local location'),
     // Longer description in the UI. Required.
     'help' => t('Table holding the stock locations.'),
     'weight' => -10,
   ];
 
   // Fields.
-  $data['cs_inventory_location']['locid'] = [
+  $data['commerce_stock_location']['id'] = [
     'title' => t('Location ID'),
-    'help' => t('Unique Stock Location ID.'),
+    'help' => t('The location ID.'),
     'field' => [
       'id' => 'numeric',
     ],
@@ -61,7 +61,7 @@ function commerce_stock_local_views_data() {
       'id' => 'standard',
     ],
   ];
-  $data['cs_inventory_location']['name'] = [
+  $data['commerce_stock_location']['name'] = [
     'title' => t('Name'),
     'help' => t('The location name.'),
     'field' => [
@@ -78,10 +78,9 @@ function commerce_stock_local_views_data() {
     ],
   ];
 
-  $data['cs_inventory_location']['status'] = [
+  $data['commerce_stock_location']['status'] = [
     'title' => t('Status'),
-    'help' => t('Is the location active.'),
-
+    'help' => t('Location active flag.'),
     'field' => [
       'id' => 'boolean',
     ],
@@ -97,20 +96,20 @@ function commerce_stock_local_views_data() {
   ];
 
   // Stock transactions.
-  $data['cs_inventory_transaction'] = [];
-  $data['cs_inventory_transaction']['table'] = [];
-  $data['cs_inventory_transaction']['table']['group'] = t('Stock transactions');
-  $data['cs_inventory_transaction']['table']['provider'] = 'commerce_stock_local';
-  $data['cs_inventory_transaction']['table']['base'] = [
-    'field' => 'trid',
-    'title' => t('Stock transaction'),
+  $data['commerce_stock_transaction'] = [];
+  $data['commerce_stock_transaction']['table'] = [];
+  $data['commerce_stock_transaction']['table']['group'] = t('Commerce Stock Local');
+  $data['commerce_stock_transaction']['table']['provider'] = 'commerce_stock_local';
+  $data['commerce_stock_transaction']['table']['base'] = [
+    'field' => 'id',
+    'title' => t('Commerce Stock Local transaction'),
     'help' => t('Table holding the stock transactions.'),
     'weight' => -10,
   ];
   // Fields.
-  $data['cs_inventory_transaction']['trid'] = [
-    'title' => t('Transactions ID'),
-    'help' => t('Unique Stock Transactions ID.'),
+  $data['commerce_stock_transaction']['id'] = [
+    'title' => t('Transaction ID'),
+    'help' => t('The transaction ID.'),
     'field' => [
       'id' => 'numeric',
     ],
@@ -124,7 +123,7 @@ function commerce_stock_local_views_data() {
       'id' => 'standard',
     ],
   ];
-  $data['cs_inventory_transaction']['variation_id'] = [
+  $data['commerce_stock_transaction']['variation_id'] = [
     'title' => t('Variation ID'),
     'help' => t('The product variation ID.'),
     'field' => [
@@ -146,9 +145,9 @@ function commerce_stock_local_views_data() {
       'label' => t('Product variation relating the transaction'),
     ],
   ];
-  $data['cs_inventory_transaction']['qty'] = [
+  $data['commerce_stock_transaction']['qty'] = [
     'title' => t('Qty'),
-    'help' => t('The Quantity.'),
+    'help' => t('The stock transaction quantity.'),
     'field' => [
       'id' => 'numeric',
     ],
@@ -162,7 +161,7 @@ function commerce_stock_local_views_data() {
       'id' => 'standard',
     ],
   ];
-  $data['cs_inventory_transaction']['location_id'] = [
+  $data['commerce_stock_transaction']['location_id'] = [
     'title' => t('Location ID'),
     'help' => t('The Location ID.'),
     'field' => [
@@ -178,13 +177,13 @@ function commerce_stock_local_views_data() {
       'id' => 'standard',
     ],
     'relationship' => [
-      'base' => 'cs_inventory_location',
-      'base field' => 'locid',
+      'base' => 'commerce_stock_location',
+      'base field' => 'location_id',
       'id' => 'standard',
       'label' => t('Stock Location'),
     ],
   ];
-  $data['cs_inventory_transaction']['location_zone'] = [
+  $data['commerce_stock_transaction']['location_zone'] = [
     'title' => t('Zone'),
     'help' => t('The location zone.'),
     'field' => [
@@ -200,7 +199,7 @@ function commerce_stock_local_views_data() {
       'id' => 'standard',
     ],
   ];
-  $data['cs_inventory_transaction']['unit_cost'] = [
+  $data['commerce_stock_transaction']['unit_cost'] = [
     'title' => t('Unit cost'),
     'help' => t('The cost of a single unit.'),
     'field' => [
@@ -216,7 +215,7 @@ function commerce_stock_local_views_data() {
       'id' => 'standard',
     ],
   ];
-  $data['cs_inventory_transaction']['transaction_time'] = [
+  $data['commerce_stock_transaction']['transaction_time'] = [
     'title' => t('Time'),
     'help' => t('The date & time of the transaction.'),
     'field' => [
@@ -230,9 +229,9 @@ function commerce_stock_local_views_data() {
     ],
   ];
 
-  $data['cs_inventory_transaction']['transaction_type_id'] = [
+  $data['commerce_stock_transaction']['transaction_type_id'] = [
     'title' => t('Type ID'),
-    'help' => t('Transaction type id.'),
+    'help' => t('Transaction type ID.'),
     'field' => [
       'id' => 'numeric',
     ],
@@ -246,9 +245,9 @@ function commerce_stock_local_views_data() {
       'id' => 'standard',
     ],
   ];
-  $data['cs_inventory_transaction']['related_tid'] = [
+  $data['commerce_stock_transaction']['related_tid'] = [
     'title' => t('Related transaction ID'),
-    'help' => t('The Related transaction id.'),
+    'help' => t('The related transaction ID.'),
     'field' => [
       'id' => 'numeric',
     ],
@@ -262,9 +261,9 @@ function commerce_stock_local_views_data() {
       'id' => 'standard',
     ],
   ];
-  $data['cs_inventory_transaction']['related_oid'] = [
-    'title' => t('Related Order ID'),
-    'help' => t('The Related Order ID.'),
+  $data['commerce_stock_transaction']['related_oid'] = [
+    'title' => t('Related order ID'),
+    'help' => t('The related order ID.'),
     'field' => [
       'id' => 'numeric',
     ],
@@ -284,9 +283,9 @@ function commerce_stock_local_views_data() {
       'label' => t('Related Order'),
     ],
   ];
-  $data['cs_inventory_transaction']['related_uid'] = [
-    'title' => t('Related User ID'),
-    'help' => t('The Related User ID.'),
+  $data['commerce_stock_transaction']['related_uid'] = [
+    'title' => t('Related user ID'),
+    'help' => t('The related user ID.'),
     'field' => [
       'id' => 'numeric',
     ],
@@ -306,9 +305,9 @@ function commerce_stock_local_views_data() {
       'label' => t('User for the transaction'),
     ],
   ];
-  $data['cs_inventory_transaction']['data'] = [
+  $data['commerce_stock_transaction']['data'] = [
     'title' => t('data'),
-    'help' => t('Serialized Data.'),
+    'help' => t('The serialized transaction data.'),
     'field' => [
       'id' => 'serialized',
       'click sortable' => FALSE,
@@ -325,24 +324,24 @@ function commerce_stock_local_views_data() {
   ];
 
   // Stock transaction types.
-  $data['cs_inventory_transaction_type'] = [];
-  $data['cs_inventory_transaction_type']['table'] = [];
-  $data['cs_inventory_transaction_type']['table']['group'] = t('Stock Transaction Types');
-  $data['cs_inventory_transaction_type']['table']['provider'] = 'commerce_stock_local';
-  $data['cs_inventory_transaction_type']['table']['base'] = [
-    'field' => 'ttid',
-    'title' => t('Stock transaction Type'),
-    'help' => t('Table holding the stock transaction types.'),
+  $data['commerce_stock_transaction_type'] = [];
+  $data['commerce_stock_transaction_type']['table'] = [];
+  $data['commerce_stock_transaction_type']['table']['group'] = t('Commerce Stock Local');
+  $data['commerce_stock_transaction_type']['table']['provider'] = 'commerce_stock_local';
+  $data['commerce_stock_transaction_type']['table']['base'] = [
+    'field' => 'id',
+    'title' => t('Commerce Stock Local transaction type'),
+    'help' => t('Table holding the local stock transaction types.'),
     'weight' => -10,
   ];
 
-  $data['cs_inventory_transaction_type']['table']['join']['cs_inventory_transaction']['left_field'] = 'transaction_type_id';
-  $data['cs_inventory_transaction_type']['table']['join']['cs_inventory_transaction']['field'] = 'ttid';
+  $data['commerce_stock_transaction_type']['table']['join']['commerce_stock_transaction']['left_field'] = 'transaction_type_id';
+  $data['commerce_stock_transaction_type']['table']['join']['commerce_stock_transaction']['field'] = 'id';
 
   // Fields.
-  $data['cs_inventory_transaction_type']['ttid'] = [
-    'title' => t('Transactions Type ID'),
-    'help' => t('Unique Stock Transactions Type ID.'),
+  $data['commerce_stock_transaction_type']['id'] = [
+    'title' => t('Transaction type ID'),
+    'help' => t('The transaction type ID.'),
     'field' => [
       'id' => 'numeric',
     ],
@@ -356,8 +355,8 @@ function commerce_stock_local_views_data() {
       'id' => 'standard',
     ],
   ];
-  $data['cs_inventory_transaction_type']['name'] = [
-    'title' => t('Transaction Type Name'),
+  $data['commerce_stock_transaction_type']['name'] = [
+    'title' => t('Transaction type name'),
     'help' => t('The transaction type name.'),
     'field' => [
       'id' => 'standard',
@@ -372,9 +371,9 @@ function commerce_stock_local_views_data() {
       'id' => 'standard',
     ],
   ];
-  $data['cs_inventory_transaction_type']['parent_ttid'] = [
-    'title' => t('Parent Transactions Type ID'),
-    'help' => t('The parent stock transactions type ID.'),
+  $data['commerce_stock_transaction_type']['parent_id'] = [
+    'title' => t('Parent transaction type ID'),
+    'help' => t('The parent transaction type ID.'),
     'field' => [
       'id' => 'numeric',
     ],
