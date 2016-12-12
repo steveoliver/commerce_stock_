@@ -287,7 +287,7 @@ class StockDevTools extends FormBase {
   public function submitCheckStockForm(array &$form, FormStateInterface $form_state) {
     $prod_id = $form_state->getValue('prod_vid');
     $location_ids = explode(',', $form_state->getValue('location_ids'));
-    $stock_level = $this->stockStorageApi->getTotalStockLevel($prod_id, $location_ids);
+    $stock_level = $this->localStockStorageAPI->getTotalStockLevel($prod_id, $location_ids);
     drupal_set_message($this->t('Stock level is: @stock_level', ['@stock_level' => $stock_level]));
   }
 
@@ -296,7 +296,7 @@ class StockDevTools extends FormBase {
    */
   public function submitGetLocations(array &$form, FormStateInterface $form_state) {
     $active_only = $form_state->getValue('active_only');
-    $locations = $this->stockStorageApi->getLocationList($active_only);
+    $locations = $this->localStockStorageAPI->getLocationList($active_only);
     drupal_set_message($this->t('Locations: @locations', ['@locations' => print_r($locations, TRUE)]));
   }
 
