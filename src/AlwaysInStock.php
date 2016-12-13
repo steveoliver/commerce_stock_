@@ -2,9 +2,6 @@
 
 namespace Drupal\commerce_stock;
 
-/**
- * The API class used by the always in stock service.
- */
 class AlwaysInStock implements StockCheckInterface, StockUpdateInterface {
 
   /**
