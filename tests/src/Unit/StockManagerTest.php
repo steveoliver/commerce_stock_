@@ -56,7 +56,7 @@ class StockServiceManagerTest extends UnitTestCase {
 
     $expectedServices = [
       'stock_service_1' => $first_service,
-      'stock_service_2' => $second_service
+      'stock_service_2' => $second_service,
     ];
     $services = $this->stockServiceManager->listServices();
     $this->assertEquals($expectedServices, $services, 'The manager has the expected services');

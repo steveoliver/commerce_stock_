@@ -51,7 +51,7 @@ class StockConfigForm extends ConfigFormBase {
     foreach ($purchasable_entity_types as $type => $label) {
       $this->purchasableEntityTypes[$type] = [
         'label' => $label,
-        'bundles' => []
+        'bundles' => [],
       ];
       foreach ($entity_type_bundle_info->getBundleInfo($type) as $bundle_id => $bundle_info) {
         $this->purchasableEntityTypes[$type]['bundles'][$bundle_id] = $bundle_info['label'];
@@ -84,7 +84,7 @@ class StockConfigForm extends ConfigFormBase {
 
     $form['service_manager']['services'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Services per entity type')
+      '#title' => $this->t('Services per entity type'),
     ];
     $service_options = array_merge(['use_default' => $this->t('- Use default -')], $service_options);
     foreach ($this->purchasableEntityTypes as $entity_type_id => $entity_type_info) {
@@ -97,7 +97,7 @@ class StockConfigForm extends ConfigFormBase {
           '#type' => 'select',
           '#title' => $bundle_name,
           '#options' => $service_options,
-          '#default_value' => $config->get($entity_type_id . '_' . $bundle_id . '_service_id') ?: 'use_default'
+          '#default_value' => $config->get($entity_type_id . '_' . $bundle_id . '_service_id') ?: 'use_default',
         ];
       }
     }
