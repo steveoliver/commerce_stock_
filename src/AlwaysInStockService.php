@@ -8,21 +8,21 @@ namespace Drupal\commerce_stock;
 class AlwaysInStockService implements StockServiceInterface {
 
   /**
-   * The stock Checker.
+   * The stock checker.
    *
-   * @var \Drupal\commerce_stock\StockServiceInterface
+   * @var \Drupal\commerce_stock\StockCheckInterface
    */
   protected $stockChecker;
 
   /**
-   * The stock Updater.
+   * The stock updater.
    *
    * @var \Drupal\commerce_stock\StockUpdateInterface
    */
   protected $stockUpdater;
 
   /**
-   * The stock Configuration.
+   * The stock service configuration.
    *
    * @var \Drupal\commerce_stock\StockServiceConfigInterface
    */
@@ -32,7 +32,6 @@ class AlwaysInStockService implements StockServiceInterface {
    * Constructs a new AlwaysInStockService object.
    */
   public function __construct() {
-    // Create the objects needed.
     $this->stockChecker = new AlwaysInStock();
     $this->stockUpdater = $this->stockChecker;
     $this->stockServiceConfig = new StockServiceConfig($this->stockChecker);

@@ -4,10 +4,7 @@ namespace Drupal\commerce_stock;
 
 use Drupal\commerce\PurchasableEntityInterface;
 
-/**
- * Defines a common interface for stock checking.
- */
-interface StockManagerInterface {
+interface StockServiceManagerInterface {
 
   /**
    * Adds a Stock service.

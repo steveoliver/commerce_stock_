@@ -4,34 +4,30 @@ namespace Drupal\commerce_stock;
 
 use Drupal\commerce\PurchasableEntityInterface;
 
-/**
- * Configuration class for the stock manager.
- */
-class StockManagerConfig implements StockManagerConfigInterface {
+class StockServiceManagerConfig implements StockServiceManagerConfigInterface {
 
   /**
-   * The stock manager.
+   * The stock service manager.
    *
-   * @var \Drupal\commerce_stock\StockManagerInterface
+   * @var \Drupal\commerce_stock\StockServiceManagerInterface
    */
-  protected $stockManager;
+  protected $stockServiceManager;
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(StockManagerInterface $stock_manager) {
-    $this->stockManager = $stock_manager;
+  public function __construct(StockServiceManagerInterface $stock_service_manager) {
+    $this->stockServiceManager = $stock_service_manager;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getService(PurchasableEntityInterface $entity) {
-    // Get the list of services.
-    $services = $this->stockManager->listServices();
+    $services = $this->stockServiceManager->listServices();
 
     // Get the default service.
-    $config = \Drupal::config('commerce_stock.manager');
+    $config = \Drupal::config('commerce_stock.service_manager');
     $default_service_id = $config->get('default_service_id');
 
     // Cycle all services to see if we got the default service.

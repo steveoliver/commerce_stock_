@@ -4,10 +4,7 @@ namespace Drupal\commerce_stock;
 
 use Drupal\commerce\PurchasableEntityInterface;
 
-/**
- * Defines a common interface for stock checking.
- */
-interface StockManagerConfigInterface {
+interface StockServiceManagerConfigInterface {
 
   /**
    * Constructor to point back at manager.
@@ -15,10 +12,10 @@ interface StockManagerConfigInterface {
    * @todo It's bad practice to define a specific constructor in an interface.
    *       If we want to enforce this relationship, we should find a better way!
    *
-   * @param \Drupal\commerce_stock\StockManagerInterface $stock_manager
-   *   The stock manager.
+   * @param \Drupal\commerce_stock\StockServiceManagerInterface $stock_service_manager
+   *   The stock service manager.
    */
-  public function __construct(StockManagerInterface $stock_manager);
+  public function __construct(StockServiceManagerInterface $stock_service_manager);
 
   /**
    * Get a service relevant for the entity.

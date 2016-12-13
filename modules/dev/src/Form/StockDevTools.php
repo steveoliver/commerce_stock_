@@ -24,11 +24,11 @@ class StockDevTools extends FormBase {
   protected $currentStore;
 
   /**
-   * The stock manager.
+   * The stock service manager.
    *
-   * @var \Drupal\commerce_stock\StockManager
+   * @var \Drupal\commerce_stock\StockServiceManager
    */
-  protected $stockManager;
+  protected $stockServiceManager;
 
   /**
    * The local storage API.
@@ -57,8 +57,8 @@ class StockDevTools extends FormBase {
   public function __construct() {
     $this->availabilityManager = \Drupal::service('commerce.availability_manager');
     $this->currentStore = \Drupal::service('commerce_store.store_context')->getStore();
-    $this->stockAvailabilityChecker = \Drupal::service('commerce.availability_checker.stock_availability_checker');
-    $this->stockManager = \Drupal::service('commerce.stock_manager');
+    $this->stockAvailabilityChecker = \Drupal::service('commerce_stock.availability_checker');
+    $this->stockServiceManager = \Drupal::service('commerce_stock.service_manager');
     $this->localStockStorageAPI = new LocalStockStorageAPI();
     $this->variationStorage = \Drupal::service('entity_type.manager')->getStorage('commerce_product_variation');
   }
@@ -367,7 +367,7 @@ class StockDevTools extends FormBase {
    * Submit handler for listing stock managers.
    */
   public function submitStockManagerList(array &$form, FormStateInterface $form_state) {
-    $services = $this->stockManager->listServices();
+    $services = $this->stockServiceManager->listServices();
     drupal_set_message(print_r($services, TRUE));
   }
 
@@ -382,7 +382,7 @@ class StockDevTools extends FormBase {
     $message = $form_state->getValue('transaction_notes');
     $unit_cost = NULL;
     $product_variation = $this->variationStorage->load($variation_id);
-    $this->stockManager->receiveStock($product_variation, $location_id, $zone, $quantity, $unit_cost, $message);
+    $this->stockServiceManager->receiveStock($product_variation, $location_id, $zone, $quantity, $unit_cost, $message);
     drupal_set_message('Received stock!');
   }
 
@@ -399,7 +399,7 @@ class StockDevTools extends FormBase {
     $message = $form_state->getValue('transaction_notes');
     $unit_cost = NULL;
     $product_variation = $this->variationStorage->load($variation_id);
-    $this->stockManager->sellStock($product_variation, $location_id, $zone, $quantity, $unit_cost, $order_id, $user_id, $message);
+    $this->stockServiceManager->sellStock($product_variation, $location_id, $zone, $quantity, $unit_cost, $order_id, $user_id, $message);
   }
 
   /**
@@ -415,7 +415,7 @@ class StockDevTools extends FormBase {
     $message = $form_state->getValue('transaction_notes');
     $unit_cost = NULL;
     $product_variation = $this->variationStorage->load($variation_id);
-    $this->stockManager->returnStock($product_variation, $location_id, $zone, $quantity, $unit_cost, $order_id, $user_id, $message);
+    $this->stockServiceManager->returnStock($product_variation, $location_id, $zone, $quantity, $unit_cost, $order_id, $user_id, $message);
   }
 
   /**
@@ -431,7 +431,7 @@ class StockDevTools extends FormBase {
     $message = $form_state->getValue('transaction_notes');
     $unit_cost = NULL;
     $product_variation = $this->variationStorage->load($variation_id);
-    $this->stockManager->moveStock($product_variation, $from_location_id, $to_location_id, $from_zone, $to_zone, $quantity, $unit_cost, $message);
+    $this->stockServiceManager->moveStock($product_variation, $from_location_id, $to_location_id, $from_zone, $to_zone, $quantity, $unit_cost, $message);
   }
 
 }

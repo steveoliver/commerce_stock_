@@ -22,8 +22,9 @@ class StockLevelProcessor extends TypedData {
     }
     $item = $this->getParent();
     $entity = $item->getEntity();
-    $stockManager = \Drupal::service('commerce.stock_manager');
-    $level = $stockManager->getStockLevel($entity);
+    /** @var \Drupal\commerce_stock\StockServiceManager $stockServiceManager */
+    $stockServiceManager = \Drupal::service('commerce_stock.service_manager');
+    $level = $stockServiceManager->getStockLevel($entity);
     $this->processed = $level;
     return $level;
   }
