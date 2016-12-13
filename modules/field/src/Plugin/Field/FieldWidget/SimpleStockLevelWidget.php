@@ -38,7 +38,7 @@ class SimpleStockLevelWidget extends WidgetBase {
   public function settingsSummary() {
     $summary = [];
     $summary[] = $this->t('Entry system: @entry_system', ['@entry_system' => $this->getSetting('entry_system')]);
-    $summary[] = $this->t('Eransaction note: @transaction_note', ['@transaction_note' => $this->getSetting('transaction_note') ? 'Yes' : 'No']);
+    $summary[] = $this->t('Transaction note: @transaction_note', ['@transaction_note' => $this->getSetting('transaction_note') ? 'Yes' : 'No']);
     return $summary;
   }
 
@@ -128,8 +128,9 @@ class SimpleStockLevelWidget extends WidgetBase {
             [$this, 'validateSimple'],
           ],
         ];
-      } elseif ($entry_system == 'basic') {
-        // A lable showing the stock.
+      }
+      elseif ($entry_system == 'basic') {
+        // A label showing the stock.
         $elements['stock']['stock_label'] = [
           '#type' => 'html_tag',
           '#tag' => 'strong',
@@ -147,8 +148,9 @@ class SimpleStockLevelWidget extends WidgetBase {
             array($this, 'validateBasic'),
           ],
         ];
-      } elseif ($entry_system == 'transactions') {
-        // A lable showing the stock.
+      }
+      elseif ($entry_system == 'transactions') {
+        // A label showing the stock.
         $elements['stock']['stock_label'] = [
           '#type' => 'html_tag',
           '#tag' => 'strong',

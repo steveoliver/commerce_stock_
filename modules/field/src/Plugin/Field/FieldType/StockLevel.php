@@ -98,7 +98,8 @@ class StockLevel extends FieldItemBase {
           $transaction_qty = $new_level - $level;
           if ($transaction_qty > 0) {
             $transaction_type = TRANSACTION_TYPE_STOCK_IN;
-          } elseif ($transaction_qty < 0) {
+          }
+          elseif ($transaction_qty < 0) {
             $transaction_type = TRANSACTION_TYPE_STOCK_OUT;
           }
 
