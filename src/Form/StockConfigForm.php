@@ -72,7 +72,7 @@ class StockConfigForm extends ConfigFormBase {
 
     $form['service_manager'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Stock Services'),
+      '#title' => $this->t('Stock services'),
     ];
 
     $form['service_manager']['default_service_id'] = [
@@ -93,11 +93,12 @@ class StockConfigForm extends ConfigFormBase {
         '#title' => $entity_type_info['label'],
       ];
       foreach ($entity_type_info['bundles'] as $bundle_id => $bundle_name) {
-        $form['service_manager']['services'][$entity_type_id][$entity_type_id . '_' . $bundle_id] = [
+        $config_key = $entity_type_id . '_' . $bundle_id . '_service_id';
+        $form['service_manager']['services'][$entity_type_id][$config_key] = [
           '#type' => 'select',
           '#title' => $bundle_name,
           '#options' => $service_options,
-          '#default_value' => $config->get($entity_type_id . '_' . $bundle_id . '_service_id') ?: 'use_default',
+          '#default_value' => $config->get($config_key) ?: 'use_default',
         ];
       }
     }
@@ -122,7 +123,7 @@ class StockConfigForm extends ConfigFormBase {
     foreach ($this->purchasableEntityTypes as $entity_type_id => $entity_type_info) {
       foreach (array_keys($entity_type_info['bundles']) as $bundle_id) {
         $key = $entity_type_id . '_' . $bundle_id . '_service_id';
-        $value = $values[$entity_type_id . '_' . $bundle_id];
+        $value = $values[$key];
         if ($value !== 'use_default') {
           $config->set($key, $value);
         }
